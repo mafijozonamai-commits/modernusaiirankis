@@ -5,47 +5,54 @@ import { ArrowLeft, Target, Users, Lightbulb, Award } from "lucide-react";
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-background">
+    <div className="min-h-screen bg-gradient-background overflow-x-hidden">
+      {/* Floating Orbs Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="orb-effect w-80 h-80 -top-40 -left-40 animate-float" style={{animationDelay: '0s'}}></div>
+        <div className="orb-effect w-56 h-56 top-1/4 -right-28 animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="orb-effect w-64 h-64 bottom-1/4 left-1/4 animate-float" style={{animationDelay: '4s'}}></div>
+      </div>
+
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-md">
+      <header className="glass-morphism border-b sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Button asChild variant="outline" size="sm">
+          <div className="flex items-center gap-4 animate-slideInLeft">
+            <Button asChild variant="outline" size="sm" className="morph-button shadow-card">
               <Link to="/">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Grįžti
               </Link>
             </Button>
-            <h1 className="text-xl font-semibold">Apie mus</h1>
+            <h1 className="text-xl font-semibold text-gradient">Apie mus</h1>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Hero Section */}
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-learning bg-clip-text text-transparent">
+        <div className="max-w-4xl mx-auto text-center mb-20 animate-slideInUp">
+          <h1 className="text-5xl md:text-7xl font-black mb-8 text-gradient">
             Apie Skaitmeninę Debatų Trenerę
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
             Mūsų misija - padėti mokiniams ir studentams tobulinti kritinio mąstymo, argumentavimo 
             ir viešo kalbėjimo įgūdžius naudojant pažangią dirbtinio intelekto technologiją.
           </p>
         </div>
 
         {/* Mission Section */}
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <Card className="bg-gradient-card border-border/50">
+        <div className="grid md:grid-cols-2 gap-12 mb-20 animate-slideInUp" style={{animationDelay: '0.2s'}}>
+          <Card className="card-3d border-0 bg-gradient-card shadow-floating hover:shadow-glow transition-all duration-500">
             <CardHeader>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-gradient-primary text-primary-foreground">
-                  <Target className="h-6 w-6" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-gradient-primary text-primary-foreground shadow-3d">
+                  <Target className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-2xl">Mūsų misija</CardTitle>
+                <CardTitle className="text-3xl font-bold">Mūsų misija</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-base leading-relaxed">
+              <CardDescription className="text-lg leading-relaxed">
                 Kuriame modernius sprendimus, kurie padeda jaunimui ugdyti kritinio mąstymo gebėjimus, 
                 būtinus šiuolaikiniame pasaulyje. Tikime, kad debatavimo įgūdžiai formuoja stipresnius 
                 ir labiau informuotus visuomenės narius.
@@ -53,17 +60,17 @@ const AboutPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-card border-border/50">
+          <Card className="card-3d border-0 bg-gradient-card shadow-floating hover:shadow-glow transition-all duration-500">
             <CardHeader>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-gradient-primary text-primary-foreground">
-                  <Lightbulb className="h-6 w-6" />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-gradient-learning text-primary-foreground shadow-3d">
+                  <Lightbulb className="h-8 w-8" />
                 </div>
-                <CardTitle className="text-2xl">Mūsų vizija</CardTitle>
+                <CardTitle className="text-3xl font-bold">Mūsų vizija</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-base leading-relaxed">
+              <CardDescription className="text-lg leading-relaxed">
                 Tapti pirmaujančia debatų mokymo platforma Lietuvoje ir regione, suteikiant 
                 kiekvienam moksleiviui galimybę tobulinti savo argumentavimo ir analitinio mąstymo 
                 gebėjimus modernioje skaitmeninėje aplinkoje.
@@ -73,51 +80,51 @@ const AboutPage = () => {
         </div>
 
         {/* Features Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-learning bg-clip-text text-transparent">
+        <div className="mb-20 animate-slideInUp" style={{animationDelay: '0.4s'}}>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gradient">
             Kodėl pasirinkti mūsų platformą?
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center bg-gradient-card border-border/50">
+            <Card className="card-3d text-center border-0 bg-gradient-card shadow-floating hover:shadow-glow transition-all duration-500">
               <CardHeader>
-                <div className="mx-auto mb-4 p-3 rounded-full bg-gradient-primary text-primary-foreground w-fit">
-                  <Users className="h-8 w-8" />
+                <div className="mx-auto mb-6 p-4 rounded-2xl bg-gradient-primary text-primary-foreground w-fit shadow-3d">
+                  <Users className="h-10 w-10" />
                 </div>
-                <CardTitle>Personalizuotas mokymasis</CardTitle>
+                <CardTitle className="text-2xl font-bold">Personalizuotas mokymasis</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription>
+                <CardDescription className="text-base leading-relaxed">
                   AI asistentas prisitaiko prie jūsų lygio ir mokymosi tempo, suteikdamas 
                   individualų grįžtamąjį ryšį kiekvienam argumentui.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center bg-gradient-card border-border/50">
+            <Card className="card-3d text-center border-0 bg-gradient-card shadow-floating hover:shadow-glow transition-all duration-500">
               <CardHeader>
-                <div className="mx-auto mb-4 p-3 rounded-full bg-gradient-primary text-primary-foreground w-fit">
-                  <Award className="h-8 w-8" />
+                <div className="mx-auto mb-6 p-4 rounded-2xl bg-gradient-hero text-primary-foreground w-fit shadow-3d">
+                  <Award className="h-10 w-10" />
                 </div>
-                <CardTitle>Motyvuojanti sistema</CardTitle>
+                <CardTitle className="text-2xl font-bold">Motyvuojanti sistema</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription>
+                <CardDescription className="text-base leading-relaxed">
                   Pasiekimų sistema ir pažangos sekimas padeda išlaikyti motyvaciją ir 
                   aiškiai matyti savo tobulėjimą debatavimo srityje.
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center bg-gradient-card border-border/50">
+            <Card className="card-3d text-center border-0 bg-gradient-card shadow-floating hover:shadow-glow transition-all duration-500">
               <CardHeader>
-                <div className="mx-auto mb-4 p-3 rounded-full bg-gradient-primary text-primary-foreground w-fit">
-                  <Target className="h-8 w-8" />
+                <div className="mx-auto mb-6 p-4 rounded-2xl bg-secondary text-secondary-foreground w-fit shadow-3d">
+                  <Target className="h-10 w-10" />
                 </div>
-                <CardTitle>Lietuviška aplinka</CardTitle>
+                <CardTitle className="text-2xl font-bold">Lietuviška aplinka</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription>
+                <CardDescription className="text-base leading-relaxed">
                   Specialiai sukurta lietuvių kalbai ir švietimo sistemai, su aktualiomis 
                   temomis ir kultūriškai relevantiškais pavyzdžiais.
                 </CardDescription>
@@ -127,37 +134,37 @@ const AboutPage = () => {
         </div>
 
         {/* Values Section */}
-        <div className="max-w-4xl mx-auto">
-          <Card className="bg-gradient-glow border-primary/20">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl mb-4">Mūsų vertybės</CardTitle>
+        <div className="max-w-5xl mx-auto mb-20 animate-slideInUp" style={{animationDelay: '0.6s'}}>
+          <Card className="card-3d border-0 bg-gradient-glow shadow-glow hover:shadow-floating transition-all duration-500">
+            <CardHeader className="text-center pb-8">
+              <CardTitle className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Mūsų vertybės</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">Prieinamumas</h4>
-                  <p className="text-muted-foreground">
+            <CardContent className="p-8">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-xl text-gradient mb-3">Prieinamumas</h4>
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     Tikime, kad kiekvienas mokinys turi teisę į kokybišką debatų mokymą, 
                     nepriklausomai nuo geografinės padėties ar mokyklos išteklių.
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">Inovacijos</h4>
-                  <p className="text-muted-foreground">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-xl text-gradient mb-3">Inovacijos</h4>
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     Nuolat ieškome naujų būdų, kaip technologijos gali pagerinti mokymosi 
                     procesą ir padaryti jį įdomesnį bei efektyvesnį.
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">Kokybė</h4>
-                  <p className="text-muted-foreground">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-xl text-gradient mb-3">Kokybė</h4>
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     Užtikriname aukščiausią mokymo turinio ir technologijos kokybę, 
                     kad kiekvienas naudotojas gautų maksimalią naudą.
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-2 text-primary">Bendruomeniškumas</h4>
-                  <p className="text-muted-foreground">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-xl text-gradient mb-3">Bendruomeniškumas</h4>
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     Kuriame palaikančią mokymosi bendruomenę, kur kiekvienas gali 
                     dalintis patirtimi ir tobulėti kartu.
                   </p>
@@ -168,14 +175,18 @@ const AboutPage = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center mt-16">
-          <h3 className="text-2xl font-bold mb-4">Pasiruošę pradėti?</h3>
-          <p className="text-muted-foreground mb-6">
-            Prisijunkite prie mūsų bendruomenės ir pradėkite tobulinti savo debatavimo įgūdžius šiandien.
-          </p>
-          <Button asChild size="lg" className="shadow-button">
-            <Link to="/app">Pradėti mokytis</Link>
-          </Button>
+        <div className="text-center animate-slideInUp" style={{animationDelay: '0.8s'}}>
+          <Card className="card-3d border-0 bg-gradient-mesh shadow-floating hover:shadow-glow transition-all duration-500 inline-block">
+            <CardContent className="p-12">
+              <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gradient">Pasiruošę pradėti?</h3>
+              <p className="text-muted-foreground mb-8 text-lg max-w-2xl">
+                Prisijunkite prie mūsų bendruomenės ir pradėkite tobulinti savo debatavimo įgūdžius šiandien.
+              </p>
+              <Button asChild size="lg" className="text-xl px-10 py-8 morph-button shadow-floating bg-gradient-primary border-0">
+                <Link to="/app">Pradėti mokytis</Link>
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

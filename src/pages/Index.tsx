@@ -89,11 +89,18 @@ const Index = () => {
 
   // Desktop view
   return (
-    <div className="min-h-screen bg-gradient-background">
-      <div className="container mx-auto px-4 py-6">
+    <div className="min-h-screen bg-gradient-background overflow-x-hidden">
+      {/* Floating Orbs Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="orb-effect w-72 h-72 -top-36 -left-36 animate-float" style={{animationDelay: '0s'}}></div>
+        <div className="orb-effect w-48 h-48 top-1/3 -right-24 animate-float" style={{animationDelay: '3s'}}></div>
+        <div className="orb-effect w-60 h-60 bottom-1/3 left-1/5 animate-float" style={{animationDelay: '1.5s'}}></div>
+      </div>
+
+      <div className="container mx-auto px-4 py-6 relative z-10">
         {/* Header with back navigation */}
-        <div className="flex items-center justify-between mb-6">
-          <Button asChild variant="outline" size="sm">
+        <div className="flex items-center justify-between mb-8">
+          <Button asChild variant="outline" size="sm" className="glass-morphism shadow-card morph-button">
             <Link to="/">
               <ArrowLeft className="h-4 w-4 mr-2" />
               {translations.nav.backToHome}
@@ -102,22 +109,22 @@ const Index = () => {
         </div>
 
         {/* Main Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-learning bg-clip-text text-transparent mb-2">
+        <div className="text-center mb-12 animate-slideInUp">
+          <h1 className="text-5xl md:text-6xl font-black mb-4 text-gradient">
             {translations.app.title}
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-6">
             {translations.app.subtitle}
           </p>
-          <div className="flex items-center justify-center gap-2 mt-3">
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium">
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/20 text-accent-foreground text-sm font-semibold shadow-floating">
               {translations.landing.beta}
             </div>
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-primary text-primary-foreground text-sm font-semibold shadow-glow border-0">
               {translations.landing.aiIntegration}
             </div>
             {viewport.isStandalone && (
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-500/20 text-green-700 text-sm font-medium">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-semibold shadow-floating">
                 {translations.landing.mobileApp}
               </div>
             )}
@@ -125,31 +132,36 @@ const Index = () => {
         </div>
 
         {/* Navigation */}
-        <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="animate-slideInUp" style={{animationDelay: '0.2s'}}>
+          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+        </div>
 
-        {activeTab === "presentation" && (
-          <div className="mt-6">
-            <PresentationMode />
-          </div>
-        )}
+        {/* Content Container */}
+        <div className="mt-8 animate-slideInUp" style={{animationDelay: '0.4s'}}>
+          {activeTab === "presentation" && (
+            <div className="glass-morphism rounded-2xl p-6 shadow-floating">
+              <PresentationMode />
+            </div>
+          )}
 
-        {activeTab === "debates" && (
-          <div className="mt-6">
-            <ImprovedDebateInterface />
-          </div>
-        )}
+          {activeTab === "debates" && (
+            <div className="glass-morphism rounded-2xl p-6 shadow-floating">
+              <ImprovedDebateInterface />
+            </div>
+          )}
 
-        {activeTab === "professor" && (
-          <div className="mt-6">
-            <ProfessorMode />
-          </div>
-        )}
+          {activeTab === "professor" && (
+            <div className="glass-morphism rounded-2xl p-6 shadow-floating">
+              <ProfessorMode />
+            </div>
+          )}
 
-        {activeTab === "settings" && (
-          <div className="mt-6">
-            <SettingsPanel />
-          </div>
-        )}
+          {activeTab === "settings" && (
+            <div className="glass-morphism rounded-2xl p-6 shadow-floating">
+              <SettingsPanel />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
