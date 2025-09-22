@@ -51,19 +51,27 @@ All colors MUST be HSL.
     /* Enhanced Design Tokens */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-variant)));
     --gradient-learning: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--warning)));
     --gradient-background: radial-gradient(ellipse at top, hsl(217 100% 97%), hsl(232 50% 98%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(232 20% 98%));
     --gradient-glow: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
+    --gradient-mesh: radial-gradient(at 40% 20%, hsl(var(--primary) / 0.3) 0px, transparent 50%), 
+                     radial-gradient(at 80% 0%, hsl(var(--accent) / 0.3) 0px, transparent 50%), 
+                     radial-gradient(at 0% 50%, hsl(var(--warning) / 0.3) 0px, transparent 50%);
+    --gradient-orb: radial-gradient(circle, hsl(var(--primary) / 0.8), hsl(var(--accent) / 0.4), transparent);
     
     --shadow-avatar: 0 20px 64px hsl(var(--primary) / 0.25), 0 8px 32px hsl(var(--primary) / 0.15);
     --shadow-card: 0 8px 32px hsl(232 15% 15% / 0.06), 0 4px 16px hsl(232 15% 15% / 0.04);
     --shadow-glow: 0 0 80px hsl(var(--primary-glow) / 0.6);
     --shadow-button: 0 4px 16px hsl(var(--primary) / 0.3);
     --shadow-input: inset 0 2px 4px hsl(232 20% 92%);
+    --shadow-3d: 0 25px 50px -12px hsl(var(--primary) / 0.4), 0 0 0 1px hsl(var(--primary) / 0.05);
+    --shadow-floating: 0 32px 64px hsl(var(--primary) / 0.12), 0 16px 32px hsl(var(--accent) / 0.08);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-morph: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -147,10 +155,114 @@ All colors MUST be HSL.
   .pulse-ring {
     @apply relative before:absolute before:inset-0 before:rounded-full before:bg-primary/20 before:animate-ping;
   }
+
+  .mesh-gradient {
+    background: var(--gradient-mesh);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  .orb-effect {
+    @apply absolute rounded-full opacity-60 animate-pulse;
+    background: var(--gradient-orb);
+    filter: blur(40px);
+  }
+
+  .card-3d {
+    transform-style: preserve-3d;
+    transition: var(--transition-morph);
+  }
+
+  .card-3d:hover {
+    transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
+  }
+
+  .text-gradient {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  .shadow-3d {
+    box-shadow: var(--shadow-3d);
+  }
+
+  .shadow-floating {
+    box-shadow: var(--shadow-floating);
+  }
+
+  .morph-button {
+    transition: var(--transition-morph);
+    transform: perspective(1000px) rotateX(0deg);
+  }
+
+  .morph-button:hover {
+    transform: perspective(1000px) rotateX(10deg) translateY(-4px);
+    box-shadow: var(--shadow-floating);
+  }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   33% { transform: translateY(-10px) rotate(1deg); }
   66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
