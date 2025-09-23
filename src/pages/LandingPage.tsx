@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedButton } from "@/components/ui/animated-button";
+import GlassCard from "@/components/ui/glass-card";
 import { 
   ArrowRight, 
   Brain, 
@@ -38,17 +41,35 @@ const LandingPage = () => {
 
       {/* Header */}
       <header className="relative z-50 border-b glass-morphism sticky top-0">
-        <div className="container mx-auto px-4 py-4">
+        <motion.div 
+          className="container mx-auto px-4 py-4"
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 animate-slideInLeft">
-              <div className="p-2 rounded-xl bg-gradient-primary shadow-3d">
+            <motion.div 
+              className="flex items-center gap-3"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.div 
+                className="p-2 rounded-xl bg-gradient-primary shadow-3d"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.5 }}
+              >
                 <MessageSquare className="h-6 w-6 text-primary-foreground" />
-              </div>
+              </motion.div>
               <span className="text-2xl font-bold text-gradient">
                 Echo Debate
               </span>
-            </div>
-            <nav className="hidden md:flex items-center gap-8 animate-slideInRight">
+            </motion.div>
+            <motion.nav 
+              className="hidden md:flex items-center gap-8"
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <Link 
                 to="/about" 
                 className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-105 font-medium"
@@ -61,12 +82,12 @@ const LandingPage = () => {
               >
                 {nav.contact}
               </Link>
-              <Button asChild variant="outline" className="morph-button shadow-card">
+              <AnimatedButton asChild variant="outline" morph3d shimmer>
                 <Link to="/app">{nav.getStarted}</Link>
-              </Button>
-            </nav>
+              </AnimatedButton>
+            </motion.nav>
           </div>
-        </div>
+        </motion.div>
       </header>
 
       {/* Hero Section */}
@@ -151,67 +172,68 @@ const LandingPage = () => {
           </div>
           
           {/* Feature Cards Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {/* AI Opponent */}
-            <Card className="card-3d group hover:shadow-floating transition-all duration-500 border-0 bg-gradient-card shadow-card">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-6 p-4 rounded-2xl bg-gradient-primary text-primary-foreground w-fit shadow-3d group-hover:animate-float">
-                  <Brain className="h-10 w-10" />
-                </div>
-                <CardTitle className="text-2xl font-bold">{landing.features.aiOpponent.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  {landing.features.aiOpponent.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            {/* Real-time Analysis */}
-            <Card className="card-3d group hover:shadow-floating transition-all duration-500 border-0 bg-gradient-card shadow-card">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-6 p-4 rounded-2xl bg-gradient-learning text-primary-foreground w-fit shadow-3d group-hover:animate-float">
-                  <Sparkles className="h-10 w-10" />
-                </div>
-                <CardTitle className="text-2xl font-bold">{landing.features.realTime.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  {landing.features.realTime.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            {/* Analytics */}
-            <Card className="card-3d group hover:shadow-floating transition-all duration-500 border-0 bg-gradient-card shadow-card">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-6 p-4 rounded-2xl bg-gradient-hero text-primary-foreground w-fit shadow-3d group-hover:animate-float">
-                  <BarChart3 className="h-10 w-10" />
-                </div>
-                <CardTitle className="text-2xl font-bold">{landing.features.analytics.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  {landing.features.analytics.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            {/* Topics */}
-            <Card className="card-3d group hover:shadow-floating transition-all duration-500 border-0 bg-gradient-card shadow-card">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto mb-6 p-4 rounded-2xl bg-gradient-orb text-primary-foreground w-fit shadow-3d group-hover:animate-float">
-                  <Target className="h-10 w-10" />
-                </div>
-                <CardTitle className="text-2xl font-bold">{landing.features.topics.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  {landing.features.topics.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            {[
+              {
+                icon: Brain,
+                title: landing.features.aiOpponent.title,
+                description: landing.features.aiOpponent.description,
+                gradient: "bg-gradient-primary"
+              },
+              {
+                icon: Sparkles,
+                title: landing.features.realTime.title,
+                description: landing.features.realTime.description,
+                gradient: "bg-gradient-learning"
+              },
+              {
+                icon: BarChart3,
+                title: landing.features.analytics.title,
+                description: landing.features.analytics.description,
+                gradient: "bg-gradient-hero"
+              },
+              {
+                icon: Target,
+                title: landing.features.topics.title,
+                description: landing.features.topics.description,
+                gradient: "bg-gradient-orb"
+              }
+            ].map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <GlassCard 
+                  key={index}
+                  hover 
+                  animation="float"
+                  className="group border-0 shadow-card"
+                >
+                  <CardHeader className="text-center pb-4">
+                    <motion.div 
+                      className={`mx-auto mb-6 p-4 rounded-2xl ${feature.gradient} text-primary-foreground w-fit shadow-3d`}
+                      whileHover={{ 
+                        rotate: [0, -10, 10, -10, 0],
+                        scale: 1.1
+                      }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <IconComponent className="h-10 w-10" />
+                    </motion.div>
+                    <CardTitle className="text-2xl font-bold">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-center text-base leading-relaxed">
+                      {feature.description}
+                    </CardDescription>
+                  </CardContent>
+                </GlassCard>
+              );
+            })}
+          </motion.div>
 
           {/* Additional Features */}
           <div className="grid md:grid-cols-3 gap-8">

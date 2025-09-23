@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,6 +11,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import debateClassroomBg from "@/assets/debate-classroom-bg.jpg";
 import aiOpponentAvatar from "@/assets/ai-opponent-avatar.jpg";
+import { AITypingIndicator } from "@/components/ui/ai-typing-indicator";
+import { AnimatedButton } from "@/components/ui/animated-button";
+import GlassCard from "@/components/ui/glass-card";
+import { AIFeedbackCard } from "@/components/ui/ai-feedback-card";
 
 // Import all components
 import CameraCapture from "./CameraCapture";
@@ -245,19 +250,33 @@ const ImprovedDebateInterface = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-background p-4">
+    <motion.div 
+      className="min-h-screen bg-gradient-background p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container mx-auto max-w-7xl space-y-6">
         
         {/* Header with Connection Status */}
-        <Card className="shadow-card glass-morphism border-0">
+        <GlassCard className="border-0">
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
+            <motion.div 
+              className="flex items-center justify-between"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-2xl bg-gradient-primary shadow-button">
+                <motion.div 
+                  className="p-3 rounded-2xl bg-gradient-primary shadow-button"
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Brain className="h-8 w-8 text-white" />
-                </div>
+                </motion.div>
                 <div>
-                  <h1 className="text-3xl font-bold bg-gradient-learning bg-clip-text text-transparent">
+                  <h1 className="text-3xl font-bold text-gradient-primary">
                     Skaitmeninis Debatų Treneris
                   </h1>
                   <p className="text-muted-foreground text-lg">Tobulinkite savo argumentavimo įgūdžius su AI pagalba</p>
@@ -265,72 +284,86 @@ const ImprovedDebateInterface = () => {
               </div>
               
               <div className="flex items-center gap-3">
-                <Badge 
-                  variant={connectionStatus === 'connected' ? 'default' : connectionStatus === 'connecting' ? 'secondary' : 'destructive'}
-                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full shadow-button transition-all duration-300 ${
-                    connectionStatus === 'connected' ? 'bg-gradient-primary text-white' :
-                    connectionStatus === 'connecting' ? 'bg-gradient-to-r from-warning to-warning/80 text-white' :
-                    'bg-gradient-to-r from-destructive to-destructive/80 text-white'
-                  }`}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.3, type: "spring" }}
                 >
-                  <div className={`w-3 h-3 rounded-full pulse-ring ${
-                    connectionStatus === 'connected' ? 'bg-white' : 
-                    connectionStatus === 'connecting' ? 'bg-white' : 'bg-white'
-                  }`} />
-                  {connectionStatus === 'connected' ? 'Claude Opus Ready' : 
-                   connectionStatus === 'connecting' ? 'Generating...' : 'Connection Error'}
-                </Badge>
-                {connectionStatus === 'connected' && (
-                  <Badge className="bg-gradient-to-r from-accent to-accent/80 text-white px-4 py-2 rounded-full shadow-button floating-animation">
-                    ✨ Premium AI
+                  <Badge 
+                    variant={connectionStatus === 'connected' ? 'default' : connectionStatus === 'connecting' ? 'secondary' : 'destructive'}
+                    className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full shadow-button transition-all duration-300 ${
+                      connectionStatus === 'connected' ? 'bg-gradient-primary text-white pulse-glow' :
+                      connectionStatus === 'connecting' ? 'bg-gradient-to-r from-warning to-warning/80 text-white' :
+                      'bg-gradient-to-r from-destructive to-destructive/80 text-white'
+                    }`}
+                  >
+                    <motion.div 
+                      className={`w-3 h-3 rounded-full ${
+                        connectionStatus === 'connected' ? 'bg-white' : 
+                        connectionStatus === 'connecting' ? 'bg-white' : 'bg-white'
+                      }`}
+                      animate={connectionStatus === 'connecting' ? { scale: [1, 1.2, 1] } : {}}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    />
+                    {connectionStatus === 'connected' ? 'Claude Opus Ready' : 
+                     connectionStatus === 'connecting' ? 'Generating...' : 'Connection Error'}
                   </Badge>
+                </motion.div>
+                {connectionStatus === 'connected' && (
+                  <motion.div
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Badge className="bg-gradient-to-r from-accent to-accent/80 text-white px-4 py-2 rounded-full shadow-button floating-animation">
+                      ✨ Premium AI
+                    </Badge>
+                  </motion.div>
                 )}
                 {debateStarted && (
-                  <Badge variant="outline" className="px-4 py-2 rounded-full border-2 border-primary text-primary font-semibold">
-                    Round {round}/5
-                  </Badge>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  >
+                    <Badge variant="outline" className="px-4 py-2 rounded-full border-2 border-primary text-primary font-semibold glow-border">
+                      Round {round}/5
+                    </Badge>
+                  </motion.div>
                 )}
               </div>
-            </div>
+            </motion.div>
           </CardContent>
-        </Card>
+        </GlassCard>
 
         {/* Main Interface */}
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
           
           {/* Main Debate Area */}
-          <div className="xl:col-span-3">
+          <motion.div 
+            className="xl:col-span-3"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-4 p-2 bg-gradient-card rounded-2xl shadow-card">
-                <TabsTrigger 
-                  value="setup" 
-                  disabled={debateStarted}
-                  className="rounded-xl px-6 py-3 font-medium transition-all duration-300 data-[state=active]:bg-gradient-primary data-[state=active]:text-white data-[state=active]:shadow-button"
-                >
-                  <Settings className="h-5 w-5 mr-2" />
-                  Nustatymai
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="debate"
-                  className="rounded-xl px-6 py-3 font-medium transition-all duration-300 data-[state=active]:bg-gradient-primary data-[state=active]:text-white data-[state=active]:shadow-button"
-                >
-                  <Bot className="h-5 w-5 mr-2" />
-                  Debatai
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="analysis"
-                  className="rounded-xl px-6 py-3 font-medium transition-all duration-300 data-[state=active]:bg-gradient-primary data-[state=active]:text-white data-[state=active]:shadow-button"
-                >
-                  <BarChart3 className="h-5 w-5 mr-2" />
-                  Analizė
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="camera"
-                  className="rounded-xl px-6 py-3 font-medium transition-all duration-300 data-[state=active]:bg-gradient-primary data-[state=active]:text-white data-[state=active]:shadow-button"
-                >
-                  <Camera className="h-5 w-5 mr-2" />
-                  Kamera
-                </TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 p-2 glass-morphism rounded-2xl shadow-card">
+                {[
+                  { value: "setup", icon: Settings, label: "Nustatymai", disabled: debateStarted },
+                  { value: "debate", icon: Bot, label: "Debatai", disabled: false },
+                  { value: "analysis", icon: BarChart3, label: "Analizė", disabled: false },
+                  { value: "camera", icon: Camera, label: "Kamera", disabled: false }
+                ].map((tab) => (
+                  <TabsTrigger 
+                    key={tab.value}
+                    value={tab.value}
+                    disabled={tab.disabled}
+                    className="rounded-xl px-6 py-3 font-medium transition-all duration-300 data-[state=active]:bg-gradient-primary data-[state=active]:text-white data-[state=active]:shadow-button"
+                  >
+                    <tab.icon className="h-5 w-5 mr-2" />
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
               </TabsList>
 
               {/* Setup Tab */}
@@ -706,9 +739,10 @@ const ImprovedDebateInterface = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
+    </motion.div>
     </div>
   );
 };

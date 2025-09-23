@@ -140,52 +140,123 @@ All colors MUST be HSL.
 }
 
 @layer components {
+  /* Glass Morphism System */
   .glass-morphism {
-    @apply backdrop-blur-xl bg-white/80 border border-white/20;
+    @apply backdrop-blur-2xl bg-white/10 border border-white/20;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
   }
   
+  .glass-morphism.dark {
+    @apply bg-black/10 border-white/10;
+  }
+
+  .glass-card {
+    @apply glass-morphism rounded-2xl p-6 shadow-floating transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply shadow-glow transform scale-[1.02];
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Enhanced Glow Effects */
   .glow-effect {
-    @apply relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-gradient-glow before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100;
+    @apply relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-gradient-glow before:opacity-0 before:transition-all before:duration-500 hover:before:opacity-100;
+  }
+
+  .glow-border {
+    @apply relative;
+    background: linear-gradient(var(--gradient-background)) padding-box,
+                var(--gradient-primary) border-box;
+    border: 2px solid transparent;
   }
   
+  /* Advanced Animations */
   .floating-animation {
     animation: float 6s ease-in-out infinite;
+  }
+
+  .pulse-glow {
+    @apply relative;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+      transform: scale(1);
+    }
+    50% { 
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+      transform: scale(1.05);
+    }
   }
   
   .pulse-ring {
     @apply relative before:absolute before:inset-0 before:rounded-full before:bg-primary/20 before:animate-ping;
   }
 
+  /* Mesh and Gradient Backgrounds */
   .mesh-gradient {
     background: var(--gradient-mesh);
     background-size: 400% 400%;
-    animation: gradientShift 8s ease infinite;
+    animation: gradientShift 12s ease infinite;
+  }
+
+  .dynamic-mesh {
+    background: var(--gradient-mesh);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite, meshFloat 15s ease-in-out infinite;
+  }
+
+  @keyframes meshFloat {
+    0%, 100% { filter: hue-rotate(0deg); }
+    25% { filter: hue-rotate(90deg); }
+    50% { filter: hue-rotate(180deg); }
+    75% { filter: hue-rotate(270deg); }
   }
 
   .orb-effect {
-    @apply absolute rounded-full opacity-60 animate-pulse;
+    @apply absolute rounded-full opacity-40;
     background: var(--gradient-orb);
-    filter: blur(40px);
+    filter: blur(60px);
+    animation: float 8s ease-in-out infinite, orbGlow 4s ease-in-out infinite;
   }
 
+  @keyframes orbGlow {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+  }
+
+  /* 3D Effects */
   .card-3d {
     transform-style: preserve-3d;
     transition: var(--transition-morph);
   }
 
   .card-3d:hover {
-    transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
+    transform: rotateY(8deg) rotateX(8deg) translateZ(30px);
+    box-shadow: var(--shadow-3d);
   }
 
+  /* Enhanced Text Gradients */
   .text-gradient {
     background: var(--gradient-hero);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
-    animation: gradientShift 6s ease infinite;
+    animation: gradientShift 8s ease infinite;
   }
 
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Enhanced Shadows */
   .shadow-3d {
     box-shadow: var(--shadow-3d);
   }
@@ -194,14 +265,106 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-floating);
   }
 
+  .shadow-intense {
+    box-shadow: 0 32px 80px hsl(var(--primary) / 0.3), 
+                0 16px 40px hsl(var(--accent) / 0.2),
+                0 8px 20px hsl(var(--primary) / 0.1);
+  }
+
+  /* Advanced Button Effects */
   .morph-button {
+    @apply relative overflow-hidden;
     transition: var(--transition-morph);
     transform: perspective(1000px) rotateX(0deg);
   }
 
+  .morph-button::before {
+    @apply absolute inset-0 bg-gradient-primary opacity-0 transition-opacity duration-300;
+    content: '';
+  }
+
   .morph-button:hover {
-    transform: perspective(1000px) rotateX(10deg) translateY(-4px);
+    transform: perspective(1000px) rotateX(12deg) translateY(-6px);
     box-shadow: var(--shadow-floating);
+  }
+
+  .morph-button:hover::before {
+    opacity: 0.1;
+  }
+
+  .button-glow {
+    @apply relative;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+    transition: var(--transition-smooth);
+  }
+
+  .button-glow:hover {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+    transform: translateY(-2px);
+  }
+
+  /* Loading and AI Indicators */
+  .ai-typing {
+    @apply flex items-center gap-1;
+  }
+
+  .ai-typing .dot {
+    @apply w-2 h-2 bg-primary rounded-full animate-pulse;
+    animation: aiTyping 1.4s infinite;
+  }
+
+  .ai-typing .dot:nth-child(1) { animation-delay: 0s; }
+  .ai-typing .dot:nth-child(2) { animation-delay: 0.2s; }
+  .ai-typing .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes aiTyping {
+    0%, 60%, 100% { 
+      transform: translateY(0);
+      opacity: 0.4;
+    }
+    30% { 
+      transform: translateY(-10px);
+      opacity: 1;
+    }
+  }
+
+  .progress-glow {
+    @apply relative overflow-hidden;
+  }
+
+  .progress-glow::after {
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent;
+    content: '';
+    animation: progressShine 2s infinite;
+  }
+
+  @keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* Interactive Elements */
+  .interactive-card {
+    @apply glass-morphism rounded-2xl transition-all duration-300 cursor-pointer;
+  }
+
+  .interactive-card:hover {
+    @apply shadow-intense transform scale-105;
+  }
+
+  .interactive-card:active {
+    @apply scale-95;
+  }
+
+  /* Responsive Glass Effects */
+  @media (max-width: 768px) {
+    .glass-morphism {
+      @apply backdrop-blur-xl bg-white/20;
+    }
+    
+    .orb-effect {
+      filter: blur(30px);
+    }
   }
 }
 
