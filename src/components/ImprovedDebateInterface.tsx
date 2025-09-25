@@ -701,7 +701,7 @@ const ImprovedDebateInterface = () => {
                 </div>
               </TabsContent>
             </Tabs>
-          </div>
+          </motion.div>
 
           {/* Side Panel */}
           <div className="xl:col-span-1 space-y-4">
@@ -739,11 +739,10 @@ const ImprovedDebateInterface = () => {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </div>
     </motion.div>
-    </div>
   );
 };
 
